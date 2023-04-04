@@ -1,0 +1,3 @@
+-- CREATE USER postgres;
+-- CREATE DATABASE docker;
+GRANT ALL PRIVILEGES ON DATABASE gis_db TO postgres;
