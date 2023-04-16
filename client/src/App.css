@@ -1,0 +1,75 @@
+
+.App{
+  text-align: center;
+  display:flex;
+  min-height: 100vh;
+  align-items: center;
+  justify-content:center ;
+  background-image: linear-gradient(79deg,#52aab8 ,#e9e4e9 48% ,#3ea2f4);
+
+}
+
+.auth-form-container{
+    padding: 5rem;
+    border: 1px solid rgb(84, 50, 208);
+    border-radius: 10px;
+    background-image: linear-gradient(79deg,#52aab8 ,#e9e4e9 48% ,#3ea2f4);
+
+  
+}
+  
+
+.auth-form-container , .login-form , .register-form {
+  display: flex;
+  flex-direction: column;
+  margin: 0.5rem;
+
+
+
+}
+
+
+label{
+  text-align: left;
+  padding: 0.25rem 0;
+
+
+}
+
+input{
+  margin: 0.5rem o;
+  padding: 1rem;
+  border: none;
+  border-radius: 10px;
+  
+}
+
+button{
+  border: none;
+  background-color: white;
+  padding: 10px;
+  border-radius: 10px;
+  border-color: black;
+  cursor: pointer;
+  margin: 0.5rem;
+  color: blue;
+
+}
+
+.link-btn{
+  background: none;
+  color:black;
+  text-decoration: underline;
+
+}
+
+h1{
+  color: rgb(65, 65, 185);
+  text-align: center;
+  
+}
+h2{
+  color: rgb(65, 65, 185);
+
+}
+
