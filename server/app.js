@@ -11,7 +11,7 @@ const usersRouter = require('./routes/users');
 const filesParserRouter = require('./routes/parsefiles');
 const usersManager = require('./routes/users_manager');
 const uploadFile = require('./routes/uploadfile');
-
+const getData = require('./routes/getdata');
 
 const app = express();
 
@@ -30,6 +30,7 @@ app.use('/users', usersRouter);
 app.use('/api', filesParserRouter);
 app.use('/api', usersManager);
 app.use('/api', uploadFile);
+app.use('/api', getData);
 
 
 // catch 404 and forward to error handler
