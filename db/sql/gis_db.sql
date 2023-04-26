@@ -2,7 +2,8 @@ CREATE TABLE users (
     user_name varchar(50) PRIMARY KEY,
     password varchar(50),
     email varchar(50),
-    city varchar(50)
+    city varchar(50),
+    is_admin BOOLEAN
 );
 
 CREATE TABLE cities (
