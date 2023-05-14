@@ -5,16 +5,20 @@
   min-height: 100vh;
   align-items: center;
   justify-content:center ;
-  background-image: linear-gradient(79deg,#52aab8 ,#e9e4e9 48% ,#3ea2f4);
 
 }
 
 .auth-form-container{
-    padding: 5rem;
-    border: 1px solid rgb(84, 50, 208);
-    border-radius: 10px;
-    background-image: linear-gradient(79deg,#52aab8 ,#e9e4e9 48% ,#3ea2f4);
+  display: flex;
+  justify-content: center; 
+  padding: 5rem;
+  border: 1px solid #5432d0;
+  border-radius: 10px; 
+  background-color: rgb(246, 246, 200);
+  width: 30%;
 
+
+    
   
 }
   
@@ -23,8 +27,10 @@
   display: flex;
   flex-direction: column;
   margin: 0.5rem;
+  padding: 20px;
 
 
+  
 
 }
 
@@ -64,12 +70,13 @@ button{
 }
 
 h1{
-  color: rgb(65, 65, 185);
+  color: rgb(83, 83, 185);
   text-align: center;
   
 }
 h2{
-  color: rgb(65, 65, 185);
+  color: rgb(83, 83, 185);
+  text-align: center;
 
 }
 

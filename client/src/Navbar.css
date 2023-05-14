@@ -8,8 +8,8 @@
 
 body{
   margin: 0; 
-  background-image: url(overcrowded.jpg);
-  color: rgb(235, 235, 152);
+  background-image: url(build.jpg);
+  
 
 }
 
@@ -23,7 +23,7 @@ body{
   align-items: stretch;
   gap :2rem;
   padding: 20px;
-  
+
 }
 
 .Population-Growth{
@@ -39,6 +39,7 @@ body{
   list-style: none;
   display: flex;
   gap: 1rem;
+  padding-left:50%;
 
 }
 
@@ -46,6 +47,7 @@ body{
 .nav a {
   color: inherit;
   text-decoration: none;
+  
 
 
 }
@@ -53,7 +55,7 @@ body{
 
 
 h3{
-    background-color: #8fc9f9;
+    background-color: #082741;
     color: #fff5f5;
     padding: 600px;
     display: flex;
@@ -61,6 +63,8 @@ h3{
     justify-content:center ;
     padding-top: 40px;
     display:flex;
+    justify-content: center;
+
   
   }
 
@@ -92,20 +96,20 @@ h3{
     left: 0;
     width: 100%;
     height: 100%; 
-    /* background-color: #000000cc; */
   
   
   }
   
 }
 .nav {
-  background-color: #082741;
-  color: #e9e4e9;
+  background-color:beige;
+  color: rgb(101, 101, 206);
   display: flex;
   justify-content: space-between;
   align-items: stretch;
   gap :2rem;
   padding: 20px;
+
   
 }
 
@@ -164,12 +168,9 @@ video{
   text-decoration: none;
 
 }
-  
-
 
 h3{
-    background-color: #8fc9f9;
-    color: #fff5f5;
+    color: #b83c3c;
     padding: 600px;
     display: flex;
     flex-direction: column;
@@ -190,6 +191,7 @@ h3{
   flex-direction: column;
   align-items: center;
   color: white;
+
 } 
 
 h4{

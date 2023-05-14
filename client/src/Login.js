@@ -9,23 +9,34 @@ export const Login = (props) => {
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
 
-  const Navigate = useNavigate();
+  const navigate = useNavigate();
 
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-     console.log(email);
-     console.log(pass);
-     Navigate("/Home")
-
-  }
-
-  const handleLogin = () => {
-    // Redirect to a local HTML file after login
-    window.location.href = "file:///C:/Users/USER/Desktop/%D7%A4%D7%99%D7%AA%D7%95%D7%97%20GIS/Cities/Cities/Cities/qgis2web_2023_03_26-18_23_55_990884/index.html#12/32.0306/34.8068";
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    
+    fetch('/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        username: email,
+        password: pass
+      })
+    })
+      .then(response => {
+        if (response.status === 200) {
+          return response.json();
+        } else if (response.status === 500 ) {
+          throw new Error('Failed to authenticate');
+        }
+      })
+      .then(data => {
+        console.log(data); //  the server sends back data in the response
+        navigate('/map'); // after successful login navigate to leaflet     
+      })
+      .catch(error => console.error(error));
   };
-  
-
 
   return (
     <div className='auth-form-container'>
@@ -56,5 +67,5 @@ export const Login = (props) => {
         Don't have an account? Register here
       </button>
     </div>
-  )
-}
+  );
+};

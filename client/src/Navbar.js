@@ -1,9 +1,8 @@
- import React, {useState} from "react"
+import React, {useState} from "react"
 import { children } from "react"
 import { Link, useMatch ,useResolvedPath } from "react-router-dom"
-import video from './video-2.mp4';
-import overcrowded from './overcrowded.jpg'
-
+import pepole from './pepole.jpg';
+import build from './build.jpg';
 
 //export default function Navbar(){
     
@@ -40,15 +39,6 @@ export default function Navbar(){
       <nav className="nav">
         <Link to="/" className="PopuHlation-Growth">
           Population Growth
-          {/* <div className="overlay"></div> */}
-          {/* <video src={video} autoPlay loop muted /> */}
-          {/* * <div className="HOME-Page"> */}
-            {/* <h1>Welcome</h1> */}
-            {/* <p>To the site</p> */}
-            {/* <div className="image"> */}
-            {/* <img src="overcrowded.jpg" alt="overcrowded" />      */}
-            {/* </div> */}
-          {/* </div>  */}
         </Link>
         <ul>
           <CustomLink to="/Login">Login</CustomLink>
@@ -69,5 +59,3 @@ function CustomLink({to, children, ...props}) {
       </li>
     )
 }
-
-
