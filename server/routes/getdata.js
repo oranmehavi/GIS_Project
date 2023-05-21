@@ -3,7 +3,7 @@ const router = express.Router();
 const client = require('../scripts/db');
 
 
-router.get('/getdata', async function (req, res) {
+router.post('/getdata', async function (req, res) {
 
     let result, year1, year1_pop, year2,  year2_pop;
     year1 = req.body.year1;

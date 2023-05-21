@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const client = require('../scripts/db');
 
-router.get('/login', async function(req,res) {
+router.post('/login', async function(req,res) {
 
     let is_admin = false;
     try {
