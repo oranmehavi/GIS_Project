@@ -8,6 +8,7 @@
 
 body{
   margin: 0; 
+  justify-content:end;
   background-image: url(build.jpg);
   
 
@@ -16,6 +17,7 @@ body{
  
 @media screen and (max-width:768px) {
   .nav {
+  transition: 0.8 all ease;
   background-color: #082741;
   color: #e9e4e9;
   display: flex;
@@ -39,7 +41,6 @@ body{
   list-style: none;
   display: flex;
   gap: 1rem;
-  padding-left:50%;
 
 }
 
@@ -49,13 +50,11 @@ body{
   text-decoration: none;
   
 
-
 }
 
 
 
 h3{
-    background-color: #082741;
     color: #fff5f5;
     padding: 600px;
     display: flex;
@@ -63,7 +62,6 @@ h3{
     justify-content:center ;
     padding-top: 40px;
     display:flex;
-    justify-content: center;
 
   
   }
@@ -71,7 +69,7 @@ h3{
 
   video{
     width: 200%;
-     height: 100%; 
+    height: 100%; 
     object-fit: contain;
   
     
@@ -102,7 +100,7 @@ h3{
   
 }
 .nav {
-  background-color:beige;
+  background-color:rgb(6, 2, 39);
   color: rgb(101, 101, 206);
   display: flex;
   justify-content: space-between;
