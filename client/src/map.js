@@ -1,9 +1,9 @@
 /* eslint-disable no-undef */
-import { useState,useEffect } from "react"
+import { useState,useEffect,useRef } from "react"
 import Select from 'react-select'
 import { json_Cities_1 } from "./data/AllCities";
 export default function Home(){
-    let map 
+    
     const options = [
         { value: '2003', label: '2003' },
         { value: '2004', label: '2004' },
@@ -21,8 +21,10 @@ export default function Home(){
     const [city, setCity] = useState('');
     const [year1, setYear1] = useState('');
     const [year2, setYear2] = useState('');
-    var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
-    var bounds_group = new L.featureGroup([]);
+    const [mapInstance, setMapInstance] = useState(null);
+    const mapRef = useRef(null);
+    let autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+    let bounds_group = new L.featureGroup([]);
     function style_Cities_1_0() {
         return {
             pane: 'pane_Cities_1',
@@ -66,18 +68,19 @@ export default function Home(){
         layer.bindPopup(popupContent, {maxHeight: 400});
     }
 
-    const initMap = () => {
-        if (map)return
-        map = L.map('map', {
+    
+    useEffect(()=>{
+        
+        mapRef.current = L.map('map', {
             zoomControl:true, maxZoom:28, minZoom:1
         }).fitBounds([[31.959026207858575,34.62856111308743],[32.10213011847807,34.98494484198204]]);
-        var hash = new L.Hash(map);
-        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var hash = new L.Hash(mapRef.current);
+        mapRef.current.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
         
         
 
-        map.createPane('pane_OSMStandard_0');
-        map.getPane('pane_OSMStandard_0').style.zIndex = 400;
+        mapRef.current.createPane('pane_OSMStandard_0');
+        mapRef.current.getPane('pane_OSMStandard_0').style.zIndex = 400;
         var layer_OSMStandard_0 = L.tileLayer('http://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             pane: 'pane_OSMStandard_0',
             opacity: 1.0,
@@ -87,45 +90,27 @@ export default function Home(){
             minNativeZoom: 0,
             maxNativeZoom: 19
         });
-        //layer_OSMStandard_0;
-        map.addLayer(layer_OSMStandard_0);
+        
+        mapRef.current.addLayer(layer_OSMStandard_0);
 
-
-
-        map.createPane('pane_Cities_1');
-        map.getPane('pane_Cities_1').style.zIndex = 401;
-        map.getPane('pane_Cities_1').style['mix-blend-mode'] = 'normal';
-        return map
-    }
-
-    useEffect(()=>{
-        initMap()
-        console.log(map)
-        var layer_Cities_1 = new L.geoJson(json_Cities_1, {
-            attribution: '',
-            interactive: true,
-            dataVar: 'json_Cities_1',
-            layerName: 'layer_Cities_1',
-            pane: 'pane_Cities_1',
-            onEachFeature: pop_Cities_1,
-            style: style_Cities_1_0,
-        });
-        // bounds_group.addLayer(layer_Cities_1);
-        // map.addLayer(layer_Cities_1);
+        mapRef.current.createPane('pane_Cities_1');
+        mapRef.current.getPane('pane_Cities_1').style.zIndex = 401;
+        mapRef.current.getPane('pane_Cities_1').style['mix-blend-mode'] = 'normal';
+        setMapInstance(mapRef.current);
  
     },[])
     // debugger
 
     const updateCityInfo =(parsedRes) => {
+
         let result = {}
-        console.log(parsedRes)
+
         json_Cities_1.features.forEach(element => {
             if (element.properties.SETL_NAME === city) {
                 element.properties['Year1'] = parsedRes[0].year
                 element.properties['Year2'] = parsedRes[1].year
                 element.properties['Year1POP'] = parsedRes[0].population
                 element.properties['Year2POP'] = parsedRes[1].population
-                console.log(element)
                 result = {type: "FeatureCollection",
                 name: "Cities_1",
                 crs: { type: "name", properties: { name: "urn:ogc:def:crs:OGC:1.3:CRS84" } },
@@ -133,10 +118,12 @@ export default function Home(){
             }
         });
         return result
+        
     }
 
     const handleSubmit = (event) => {
         let cityInfo = {}
+        event.preventDefault()
         fetch('http://localhost:4000/api/getdata', {
             method: 'POST',
             headers: {
@@ -149,16 +136,17 @@ export default function Home(){
             })
           })
             .then(response => {
+
               if (response.status === 200) {
                 return response.json()
               } else if (response.status === 500 ) {
                 throw new Error('Failed to authenticate');
               }
             }).then(data => {
+
                 const cityInfo = updateCityInfo(data)
-                    console.log(cityInfo)
-                    // debugger
-                    var layer_Cities_1 = new L.geoJson(cityInfo, {
+
+                var layer_Cities_1 = new L.geoJson(cityInfo, {
                         attribution: '',
                         interactive: true,
                         dataVar: 'cityInfo',
@@ -166,16 +154,15 @@ export default function Home(){
                         pane: 'pane_Cities_1',
                         onEachFeature: pop_Cities_1,
                         style: style_Cities_1_0,
-                    });
-                    bounds_group.addLayer(layer_Cities_1);
-                    // initMap()
-                    map.addLayer(layer_Cities_1);
+                });
+                bounds_group.addLayer(layer_Cities_1);
+                mapInstance.addLayer(layer_Cities_1);
             })
 
             .catch(error => console.error(error))
             
 
-        event.preventDefault()
+        
         
 
       };
