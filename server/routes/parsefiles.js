@@ -3,7 +3,6 @@ const router = express.Router();
 const fs = require('fs');
 const client = require('../scripts/db');
 const path = require("path");
-// const {finalizeSession} = require("pg/lib/sasl");
 const xlsx = require('node-xlsx').default;
 
 const filesPath = './data_files/';
