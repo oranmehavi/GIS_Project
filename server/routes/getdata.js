@@ -5,7 +5,7 @@ const client = require('../scripts/db');
 
 router.post('/getdata', async function (req, res) {
 
-    let result, year1, year1_pop, year2,  year2_pop;
+    let result, year1, year2;
     year1 = req.body.year1;
     year2 = req.body.year2;
     try {
