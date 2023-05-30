@@ -55,8 +55,47 @@ export default function Home() {
   const [jsonKey, addJsonKey] = useState(1);
   const [chartData, setChartData] = useState([]);
   const [cityInfo, setCityInfo] = useState({});
-
+  const [cityOptions, setCityOptions] = useState([]);
+  const [yearOptions, setYearOptions] = useState([]);
   // debugger
+
+  useEffect(() => {
+
+    fetch('http://localhost:4000/api/getcities', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(response => {
+      if (response.status === 200) {
+        return response.json();
+      }
+      else if (response.status === 500){
+        throw new Error(result.json().message);
+      }
+    })
+    .then(data => setCityOptions(data.map(({name}) => ({value: name, label: name}))))
+    .catch(error => console.error(message));
+
+    fetch('http://localhost:4000/api/getyears', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(response => {
+      if (response.status === 200) {
+        return response.json();
+      }
+      else if (response.status === 500){
+        throw new Error(result.json().message);
+      }
+    })
+    .then(data => setYearOptions(data.map(({year}) => ({value: year, label: year}))))
+    .catch(error => console.error(message));
+
+  }, []);
 
   const updateCityInfo = (parsedRes) => {
 
@@ -104,7 +143,7 @@ export default function Home() {
 
         setCityInfo(updateCityInfo(data));
         let arrayOfArrays = data.reduce((accumulator, currentValue) => {
-          accumulator.push([currentValue.year.toString(), currentValue.population]);
+          accumulator.push([currentValue.year.toString(), currentValue.population.toString()]);
           return accumulator;
         }, []);
         setChartData([["Year", "Population"], ...arrayOfArrays]);
@@ -149,18 +188,12 @@ export default function Home() {
       <div className='auth-form-container'>
         <h2>Please select city and time range</h2>
         <form className='login-form' onSubmit={handleSubmit}>
-          <label htmlFor="email">City:</label>
-          <input
-            value={city}
-            placeholder="תל אביב"
-            id="city"
-            name="city"
-            onChange={(e) => setCity(e.target.value)}
-          />
+          <label>City:</label>
+          <Select options={cityOptions} onChange={(e) => setCity(e.value)}/>
           <label >Select years range:</label>
           <div style={{ display: "flex" }}>
-            <div style={{ width: "50%" }}><Select options={options} onChange={(e) => setYear1(e.value)} /></div>
-            <div style={{ width: "50%" }}><Select options={options} onChange={(e) => setYear2(e.value)} /></div>
+            <div style={{ width: "50%" }}><Select options={yearOptions} onChange={(e) => setYear1(e.value)} /></div>
+            <div style={{ width: "50%" }}><Select options={yearOptions} onChange={(e) => setYear2(e.value)} /></div>
           </div>
           <button type="submit">Get Data</button >
         </form>
