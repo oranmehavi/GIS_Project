@@ -27,5 +27,29 @@ router.post('/getdata', async function (req, res) {
 
 });
 
+router.get('/getcities', async function(req, res) {
 
+    let cities;
+    try {
+
+        cities = await client.query("SELECT name FROM cities");
+        return res.status(200).json(cities.rows);
+    }
+    catch (e) {
+        return res.status(500).json({message: e.message});
+    }
+});
+
+router.get('/getyears', async function(req, res) {
+
+    let years;
+    try {
+
+        years = await client.query("SELECT year FROM historical_data GROUP BY year ORDER BY year");
+        return res.status(200).json(years.rows);
+    }
+    catch (e) {
+        return res.status(500).json({message: e.message});
+    }
+});
 module.exports = router;
