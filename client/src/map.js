@@ -57,6 +57,8 @@ export default function Home() {
   const [cityInfo, setCityInfo] = useState({});
   const [cityOptions, setCityOptions] = useState([]);
   const [yearOptions, setYearOptions] = useState([]);
+  const [map, setMap] = useState(null);
+  const featureGroupRef = useRef();
   // debugger
 
   useEffect(() => {
@@ -96,6 +98,12 @@ export default function Home() {
     .catch(error => console.error(message));
 
   }, []);
+
+  useEffect(() => {
+      if (!map) return;
+      if (!featureGroupRef.current) return;
+      map.fitBounds(featureGroupRef.current.getBounds());
+  }, [cityInfo]);
 
   const updateCityInfo = (parsedRes) => {
 
@@ -157,7 +165,7 @@ export default function Home() {
   return (
     <div style={{ display: "flex" }}>
       <div style={{ width: "70%", height: "900px" }} id="map">
-        <MapContainer bounds={[[31.959026207858575, 34.62856111308743], [32.10213011847807, 34.98494484198204]]} minZoom={1} maxZoom={28} scrollWheelZoom={true}>
+        <MapContainer bounds={[[31.959026207858575, 34.62856111308743], [32.10213011847807, 34.98494484198204]]} minZoom={1} maxZoom={28} scrollWheelZoom={true} ref={setMap}>
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -166,7 +174,7 @@ export default function Home() {
           {cityInfo.features && cityInfo.features.map((feature, index) => {
             return (
 
-              <FeatureGroup key={jsonKey}>
+              <FeatureGroup key={jsonKey} ref={featureGroupRef}>
                 <GeoJSON data={feature} key={jsonKey} />
 
                 <Popup maxHeight="auto" maxWidth="auto">
