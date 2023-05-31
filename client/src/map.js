@@ -108,9 +108,9 @@ export default function Home() {
   const updateCityInfo = (parsedRes) => {
 
     let result = {}
-
+    
     json_Cities_1.features.forEach(element => {
-      if (element.properties.SETL_NAME === city) {
+      if (element.properties.SETL_CODE === parsedRes[0].city_id) {
         element.properties['Year1'] = parsedRes[0].year
         element.properties['Year2'] = parsedRes[1].year
         element.properties['Year1POP'] = parsedRes[0].population
