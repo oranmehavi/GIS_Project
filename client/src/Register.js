@@ -4,20 +4,42 @@ import { Navigate, useNavigate } from "react-router-dom"
 import { Login } from './Login';
 
 export const Register = (props) => {
-     const [name,Setname] = useState(''); 
+     const [username,Setname] = useState(''); 
      const [email,setEmail] = useState('');
      const [pass,setPass]= useState('');
      const [city, setCity] = useState('');
-     const Navigate = useNavigate();
+     const navigate = useNavigate();
 
      const handleSbmit = (e) => {
         e.preventDefault();
-        console.log(email);
-        console.log(pass);
-        console.log(name);
-        console.log(city);
-        Navigate("/Login")
-
+    
+    fetch('http://localhost:4000/api/signup', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        username: username,
+        password: pass,
+        email: email,
+        city: city
+      })
+    })
+      .then(response => {
+        if (response.status === 200) {
+          return response.json();
+        } else if (response.status === 500 ) {
+          return Promise.reject(response);
+        }
+      })
+      .then(data => {
+        navigate('/login'); // after successful signup navigate to login   
+      })
+      .catch((response) => {
+        response.json().then((json) => {
+          alert(json.message);
+        })
+      });
       };
 
      return (
@@ -26,29 +48,29 @@ export const Register = (props) => {
         <h2>Register</h2>
         <form className='register-form'onSubmit={handleSbmit}>
             <label htmlFor="Full Name">Name:</label>
-            <input value={name} type="full name"
-             placeholder="full name" id="full name" name="full name"
+            <input value={username}
+             placeholder="Username" id="username" name="username"
              onChange={(e) => Setname(e.target.value)}
-             />
+             required={true}/>
             <label htmlFor="email">Email:</label>
             <input value={email} type="email" placeholder="youremail@gmail.com"
              id="email" name="email"
              onChange={(e) => setEmail(e.target.value)}
-             />
+             required={true}/>
             <label htmlFor="password">Password:</label>
             <input value={pass} type="password" placeholder="********"
              id="password" name="password"
              onChange={(e) => setPass(e.target.value)}
-             />
+             required={true}/>
             <label htmlFor="livingcity">city:</label>
-            <input value={city} type="livingcity" placeholder="city" 
+            <input value={city} placeholder="city" 
             id="livingcity" name="livingcity"
             onChange={(e) => setCity(e.target.value)}
-            />
+            required={true}/>
             <button type="submit"> Register </button>
         </form>
-        <button className='link-btn' onClick={() => props.onFormSwitch('login')} >
-            Already have an account? Register here</button>
+        {/* <button className='link-btn' onClick={() => props.onFormSwitch('login')} >
+            Already have an account? Register here</button> */}
 
         </div>
         )

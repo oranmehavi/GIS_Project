@@ -14,13 +14,13 @@ export const Login = (props) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     
-    fetch('/login', {
+    fetch('http://localhost:4000/api/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        username: email,
+        email: email,
         password: pass
       })
     })
@@ -28,14 +28,17 @@ export const Login = (props) => {
         if (response.status === 200) {
           return response.json();
         } else if (response.status === 500 ) {
-          throw new Error('Failed to authenticate');
+          return Promise.reject(response);
         }
       })
       .then(data => {
-        console.log(data); //  the server sends back data in the response
         navigate('/map'); // after successful login navigate to leaflet     
       })
-      .catch(error => console.error(error));
+      .catch((response) => {
+        response.json().then((json) => {
+          alert(json.message);
+        })
+      });
   };
 
   return (
@@ -51,6 +54,7 @@ export const Login = (props) => {
           id="email"
           name="email"
           onChange={(e) => setEmail(e.target.value)}
+          required={true}
         />
         <label htmlFor="password">Password:</label>
         <input
@@ -60,12 +64,13 @@ export const Login = (props) => {
           id="password"
           name="password"
           onChange={(e) => setPass(e.target.value)}
+          required={true}
         />
         <button type="submit">Login</button >
       </form>
-      <button className='link-btn' onClick={() => props.onFormSwitch('register')}>
+      {/* <button className='link-btn' onClick={() => props.onFormSwitch('register')}>
         Don't have an account? Register here
-      </button>
+      </button> */}
     </div>
   );
 };
