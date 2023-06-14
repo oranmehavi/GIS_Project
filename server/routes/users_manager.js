@@ -15,7 +15,7 @@ router.post('/login', async function(req,res) {
             if (result.rows[0].is_admin === true) {
                 is_admin = true;
             }
-            return res.status(200).json({message: 'Logged in successfully', is_admin: is_admin});
+            return res.status(200).json({message: 'Logged in successfully', is_admin: is_admin, username: result.rows[0].username});
         }
         else {
             return res.status(500).json({message: 'Password does not match'});
