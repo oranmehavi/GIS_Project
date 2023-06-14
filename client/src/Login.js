@@ -32,6 +32,7 @@ export const Login = (props) => {
         }
       })
       .then(data => {
+        props.usernameSetterFunction(data.username.toUpperCase());
         navigate('/map'); // after successful login navigate to leaflet     
       })
       .catch((response) => {

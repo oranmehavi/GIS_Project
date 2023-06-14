@@ -10,38 +10,25 @@ import { Route,Routes} from 'react-router-dom';
 
 
  function App() { 
- let componet
+
+  const [username,setUsername] = useState('');
+
+  const usernameSetterFunction = (usernameToBeSet) => {
+    setUsername(usernameToBeSet);
+  }
    return(
     <div>   
      <>
-      <Navbar/>
-     <div className= "container">{componet}</div> 
+      <Navbar username={username}/>
+     <div className= "container"></div> 
       <Routes>
        <Route path = "Home" element={<Home />}/> 
        <Route path = "Map" element={<Map />}/> 
-       <Route path = "login" element={<Login />}/> 
+       <Route path = "login" element={<Login usernameSetterFunction={usernameSetterFunction}/>}/> 
        <Route path = "register" element={<Register />}/> 
       </Routes> 
-
-
       </>
       </div>
-//    )
-//  const [currentForm, setCurrentForm] = useState('login');
-//  const togglwForm = (forname) => {
-//    setCurrentForm(forname);
-//   }
-
-//   return (
-//         <div className="App">
-//          {
-          
-//         currentForm === "login" ? <Login onFormSwitch={togglwForm}/>:<Register />
-         
-//         }
-        
-//     </div>
-      
   );
  }
 
