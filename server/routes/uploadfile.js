@@ -14,6 +14,7 @@ router.post('/uploadfile', fileUpload({createParentPath: true}), async function 
 
     try {
         if (req.files) {
+            console.log("request: ", req)
             let xlsxFile = req.files.file;
 
             let historyInDatabase = await client.query("SELECT year FROM historical_data WHERE year= $1",

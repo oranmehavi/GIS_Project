@@ -35,10 +35,13 @@ import build from './build.jpg';
 export default function Navbar(props){
    
     const [username, setUsername] = useState('');
+    const [isAdmin, setIsAdmin] = useState(false);
     
     useEffect(() => {
+      console.log("isAdmin: ",props.isAdmin)
         setUsername(props.username);
-    }, [props.username]);
+        setIsAdmin(props.isAdmin);
+    }, [props.username, props.isAdmin]);
     
     return (
         
@@ -50,6 +53,7 @@ export default function Navbar(props){
           <ul>
             <CustomLink to="/Login">Login</CustomLink>
             <CustomLink to="/Register">Register</CustomLink>
+            {isAdmin?<CustomLink to="/Admin">Admin</CustomLink>:null}
           </ul>
 
           <Username name={username} />
