@@ -14,13 +14,11 @@ export const Admin = (props) => {
 
      const handleUpload = (e) => {
         e.preventDefault();
-    
+        const formData = new FormData();
+        formData.append('file', file);
     fetch('http://localhost:4000/api/uploadfile', {
         method: 'POST',
-        headers: {
-        'Content-Type': 'application/json'
-      },
-      body:file})
+      body: formData})
       .then(response => {
         if (response.status === 200) {
           return response.json();
