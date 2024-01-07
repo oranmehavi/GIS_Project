@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const fs = require('fs');
-const client = require('../scripts/db');
+const pool = require('../scripts/db');
 const path = require("path");
 const xlsx = require('node-xlsx').default;
 
@@ -42,19 +42,19 @@ router.get('/parsefiles', async function(req,res) {
 
 async function addToCitiesTable(citiesData) {
 
-    let citiesInDatabase = await client.query("SELECT id,name FROM cities");
+    let citiesInDatabase = await pool.query("SELECT id,name FROM cities");
 
     for (let i = 0; i < citiesData.length; i++) {
         let cityExistsInDB = citiesInDatabase.rows.find(element => element.id == citiesData[i].citySymbol);
         if (cityExistsInDB == undefined) {
 
-                await client.query("INSERT INTO cities(id, name, region) VALUES($1, $2, $3)",
+                await pool.query("INSERT INTO cities(id, name, region) VALUES($1, $2, $3)",
                     [citiesData[i].citySymbol, citiesData[i].cityName, citiesData[i].cityDistrict]);
 
         }
         else if (cityExistsInDB.name !== citiesData[i].cityName) {
 
-                await client.query(`UPDATE cities SET "name" = $1 WHERE "id" = $2`,
+                await pool.query(`UPDATE cities SET "name" = $1 WHERE "id" = $2`,
                     [citiesData[i].cityName, citiesData[i].citySymbol]);
 
         }
@@ -64,13 +64,13 @@ async function addToCitiesTable(citiesData) {
 
 async function addToHistoricTable(citiesData) {
 
-    let historyInDatabase = await client.query("SELECT year FROM historical_data");
+    let historyInDatabase = await pool.query("SELECT year FROM historical_data");
 
     for (let i = 0; i < citiesData.length; i++) {
         let historyExistsInDB = historyInDatabase.rows.find(element => element.year == citiesData[i].year);
         if (historyExistsInDB == undefined) {
 
-            await client.query("INSERT INTO historical_data(city_id, year, population) VALUES($1, $2, $3)",
+            await pool.query("INSERT INTO historical_data(city_id, year, population) VALUES($1, $2, $3)",
                 [citiesData[i].citySymbol, citiesData[i].year, citiesData[i].population]);
 
         }

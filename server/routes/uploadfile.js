@@ -3,7 +3,7 @@ const router = express.Router();
 const fileUpload = require('express-fileupload');
 const xlsx = require("node-xlsx").default;
 const path = require("path");
-const client = require("../scripts/db");
+const pool = require("../scripts/db");
 
 
 const filesPath = './server/data_files/';
@@ -16,7 +16,7 @@ router.post('/uploadfile', fileUpload({createParentPath: true}), async function 
         if (req.files) {
             let xlsxFile = req.files.file;
 
-            let historyInDatabase = await client.query("SELECT year FROM historical_data WHERE year= $1",
+            let historyInDatabase = await pool.query("SELECT year FROM historical_data WHERE year= $1",
                                                          [xlsxFile.name.slice(0, 4)]);
 
             if (historyInDatabase.rows.length > 0) {
@@ -57,19 +57,19 @@ router.post('/uploadfile', fileUpload({createParentPath: true}), async function 
 
 async function addToCitiesTable(citiesData) {
 
-    let citiesInDatabase = await client.query("SELECT id,name FROM cities");
+    let citiesInDatabase = await pool.query("SELECT id,name FROM cities");
 
     for (let i = 0; i < citiesData.length; i++) {
         let cityExistsInDB = citiesInDatabase.rows.find(element => element.id == citiesData[i].citySymbol);
         if (cityExistsInDB == undefined) {
 
-            await client.query("INSERT INTO cities(id, name, region) VALUES($1, $2, $3)",
+            await pool.query("INSERT INTO cities(id, name, region) VALUES($1, $2, $3)",
                 [citiesData[i].citySymbol, citiesData[i].cityName, citiesData[i].cityDistrict]);
 
         }
         else if (cityExistsInDB.name !== citiesData[i].cityName) {
 
-            await client.query(`UPDATE cities SET "name" = $1 WHERE "id" = $2`,
+            await pool.query(`UPDATE cities SET "name" = $1 WHERE "id" = $2`,
                 [citiesData[i].cityName, citiesData[i].citySymbol]);
 
         }
@@ -82,7 +82,7 @@ async function addToHistoricTable(citiesData) {
 
     for (let i = 0; i < citiesData.length; i++) {
 
-            await client.query("INSERT INTO historical_data(city_id, year, population) VALUES($1, $2, $3)",
+            await pool.query("INSERT INTO historical_data(city_id, year, population) VALUES($1, $2, $3)",
                 [citiesData[i].citySymbol, citiesData[i].year, citiesData[i].population]);
 
     }

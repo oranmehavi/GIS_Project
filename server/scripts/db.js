@@ -1,14 +1,11 @@
-const {Client} = require('pg');
+require("dotenv").config();
+const { Pool } = require("@neondatabase/serverless");
 
-const client = new Client ({
-    host: 'localhost',
-    port: 5432,
-    user: 'postgres',
-    password: 'docker',
-    database: 'gis_db',
+
+const pool = new Pool ({
+    connectionString: process.env.DATABASE_URL
 });
 
 
-client.connect();
 
-module.exports = client;
+module.exports = pool;
