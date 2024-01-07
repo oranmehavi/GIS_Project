@@ -4,10 +4,10 @@ import { Navigate, useNavigate } from "react-router-dom"
 import { Login } from './Login';
 
 export const Register = (props) => {
-     const [name,Setname] = useState(''); 
-     const [email,setEmail] = useState('');
-     const [pass,setPass]= useState('');
-     const [city, setCity] = useState('');
+    const [username,Setname] = useState(''); 
+    const [email,setEmail] = useState('');
+    const [pass,setPass]= useState('');
+    const [city, setCity] = useState('');
      const navigate = useNavigate();
 
      const handleSbmit = (e) => {
