@@ -12,11 +12,33 @@ export const Register = (props) => {
 
      const handleSbmit = (e) => {
         e.preventDefault();
-        console.log(email);
-        console.log(pass);
-        console.log(name);
-        console.log(city);
-        Navigate("/Login")
+        fetch('http://pop-map-server.onrender.com/api/signup', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        username: username,
+        password: pass,
+        email: email,
+        city: city
+      })
+    })
+      .then(response => {
+        if (response.status === 200) {
+          return response.json();
+        } else if (response.status === 500 ) {
+          return Promise.reject(response);
+        }
+      })
+      .then(data => {
+        navigate('/login'); // after successful signup navigate to login   
+      })
+      .catch((response) => {
+        response.json().then((json) => {
+          alert(json.message);
+        })
+      });
 
       };
 
