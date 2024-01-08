@@ -12,7 +12,7 @@ export const Register = (props) => {
 
      const handleSbmit = (e) => {
         e.preventDefault();
-        fetch('http://pop-map-server.onrender.com/api/signup', {
+        fetch('https://pop-map-server.onrender.com/api/signup', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

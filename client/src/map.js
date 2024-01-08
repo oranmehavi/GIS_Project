@@ -63,7 +63,7 @@ export default function Home() {
 
   useEffect(() => {
 
-    fetch('http://pop-map-server.onrender.com/api/getcities', {
+    fetch('https://pop-map-server.onrender.com/api/getcities', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
@@ -80,7 +80,7 @@ export default function Home() {
     .then(data => setCityOptions(data.map(({name}) => ({value: name, label: name}))))
     .catch(error => console.error(message));
 
-    fetch('http://pop-map-server.onrender.com/api/getyears', {
+    fetch('https://pop-map-server.onrender.com/api/getyears', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
@@ -129,7 +129,7 @@ export default function Home() {
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    fetch('http://pop-map-server.onrender.com/api/getdata', {
+    fetch('https://pop-map-server.onrender.com/api/getdata', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

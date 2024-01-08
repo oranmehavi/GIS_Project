@@ -14,7 +14,7 @@ export const Login = (props) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     
-    fetch('http://pop-map-server.onrender.com/api/login', {
+    fetch('https://pop-map-server.onrender.com/api/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
