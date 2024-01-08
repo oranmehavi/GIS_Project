@@ -6,7 +6,7 @@ const path = require("path");
 const pool = require("../scripts/db");
 
 
-const filesPath = './server/data_files/';
+const filesPath = './data_files/';
 
 
 router.post('/uploadfile', fileUpload({createParentPath: true}), async function (req, res) {
