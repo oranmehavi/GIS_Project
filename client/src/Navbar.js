@@ -21,7 +21,7 @@ export default function Navbar(props){
       <>
     <nav className="nav">
         <Link to="/" className="PopuHlation-Growth">
-          Population Growth
+          Pop Map
         </Link>
         <ul>
           <CustomLink to="/Login">Login</CustomLink>
