@@ -19,29 +19,14 @@ import { Route,Routes} from 'react-router-dom';
       <Routes>
        <Route path = "Home" element={<Home />}/> 
        <Route path = "Map" element={<Map />}/> 
-       <Route path = "login" element={<Login />}/> 
+       <Route path = "Admin" element={<Admin />}/> 
+       <Route path = "login" element={<Login usernameSetterFunction={usernameSetterFunction}/>}/>  
        <Route path = "register" element={<Register />}/> 
       </Routes> 
 
 
       </>
-      </div>
-//    )
-//  const [currentForm, setCurrentForm] = useState('login');
-//  const togglwForm = (forname) => {
-//    setCurrentForm(forname);
-//   }
-
-//   return (
-//         <div className="App">
-//          {
-          
-//         currentForm === "login" ? <Login onFormSwitch={togglwForm}/>:<Register />
-         
-//         }
-        
-//     </div>
-      
+      </div>      
   );
  }
 
