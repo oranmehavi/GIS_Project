@@ -168,15 +168,8 @@ video{
 }
 
 h3{
-    color: #b83c3c;
-    padding: 600px;
-    display: flex;
-    flex-direction: column;
-    justify-content:center ;
-    padding-top: 40px;
-    display:flex;
-  
-  }
+    color: #b83c3c;   
+}
   
 
 .H-container{

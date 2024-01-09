@@ -20,7 +20,7 @@ export const Login = (props) => {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        username: email,
+        email: email,
         password: pass
       })
     })
@@ -28,14 +28,18 @@ export const Login = (props) => {
         if (response.status === 200) {
           return response.json();
         } else if (response.status === 500 ) {
-          throw new Error('Failed to authenticate');
+          return Promise.reject(response);
         }
       })
       .then(data => {
-        console.log(data); //  the server sends back data in the response
+        props.usernameSetterFunction(data);
         navigate('/map'); // after successful login navigate to leaflet     
       })
-      .catch(error => console.error(error));
+      .catch((response) => {
+        response.json().then((json) => {
+          alert(json.message);
+        })
+      });
   };
 
   return (
