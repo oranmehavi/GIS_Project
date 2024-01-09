@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, {useState, useEffect} from "react"
 import { children } from "react"
 import { Link, useMatch ,useResolvedPath } from "react-router-dom"
 import pepole from './pepole.jpg';
