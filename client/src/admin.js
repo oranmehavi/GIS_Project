@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 
 
-export const Admin = (props) => {
+export default Admin = (props) => {
     const [file, setFile] = useState(null);
     
 
